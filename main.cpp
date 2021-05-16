@@ -48,9 +48,8 @@ int parse_pcap(const char* pcap_file) {
 }
 
 int main(int argc, char**argv) {
-    string s = "1.1.1.1";
-    cout<<IP4hdr::IPstr2int(s.c_str())<<endl;
     if (argc < 2) {
+        printf("%s <pkt_file> ")
         return 0;
     }
     const char* pcap_file = argv[1];
