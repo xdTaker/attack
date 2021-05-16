@@ -25,7 +25,11 @@ using namespace std;
 
 int parse_pcap(const char* pcap_file) {
     wtap wth;
-    pcap_open(pcap_file, &wth);
+    pcap_code code;
+    if (OK != (code = pcap_open(pcap_file, &wth))) {
+        printf("open %s fail, code: %d\n", pcap_file, code);
+        return code;
+    }
     int cnt = 10;
     uint8_t buf[MAX_PCAP_SIZE];
     int64_t sum_len = sizeof(pcap_file_hdr) + wth.skip_size;
@@ -49,7 +53,7 @@ int parse_pcap(const char* pcap_file) {
 
 int main(int argc, char**argv) {
     if (argc < 2) {
-        printf("%s <pkt_file> ")
+        printf("%s <pkt_file>\n", argv[0]);
         return 0;
     }
     const char* pcap_file = argv[1];
