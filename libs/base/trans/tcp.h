@@ -35,11 +35,11 @@ struct TCPhdr {
     uint16_t getSPort() {return swap_bytes<uint16_t>(srcPort);}
     uint16_t getDPort() {return swap_bytes<uint16_t>(dstPort);}
     uint16_t getHdrLen() {return offset * 4;}
-    void setCheck(void *iphdr);
+    void setCheck();
     bool check();
     void printInfo();
 };
 #define TCP_HDR_LEN 20
 
 void decode_tcp(uint8_t *pkt, LayerNode *pnode);
-uint32_t encode_tcp(uint8_t *pkt, )
+uint32_t encode_tcp(uint8_t *pkt);
