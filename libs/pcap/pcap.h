@@ -70,14 +70,14 @@ struct wtap {
     int             skip_size;
 };
 
-enum open_pcap_code {
+enum pcap_code {
     OK = 0,
     OPEN_FILE_FAIL,
-    PCAP_FILE_HDR_ERR,
-    READ_FILE_FAIL,
-    NOT_SUPPORTED,
+    OPEN_FILE_HDR_ERR,
+    OPEN_NOT_SUPPORTED,
+    READ_FILE_FINISH,
 };
 
-open_pcap_code pcap_open(const char *file, wtap *wth);
+pcap_code pcap_open(const char *file, wtap *wth);
 int pcap_read(wtap *wth, char *buf);
 void pcap_close(wtap *wth);

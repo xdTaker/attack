@@ -9,7 +9,7 @@ void pcaprec_hdr::printInfo() {
     printf("  orig len: %u\n", orig_len);
 }
 
-open_pcap_code pcap_open(const char *file, wtap *wth) {
+pcap_code pcap_open(const char *file, wtap *wth) {
     int skip_size = 0;
     int skip_bytes;
     bool byte_swapped = false;
@@ -45,11 +45,11 @@ open_pcap_code pcap_open(const char *file, wtap *wth) {
             byte_swapped = true;
             break;
         default:
-            return PCAP_FILE_HDR_ERR;
+            return OPEN_FILE_HDR_ERR;
     }
 
     if (skip_size > 0 && !fread(&skip_bytes, 1, skip_size, wth->fp))
-        return READ_FILE_FAIL;
+        return READ_FILE_FINISH;
 
     if (byte_swapped) {
         hdr->version_major = swap_bytes<uint16_t>(hdr->version_major);
@@ -59,7 +59,7 @@ open_pcap_code pcap_open(const char *file, wtap *wth) {
     }
 
     if (hdr->version_major < 2) {
-        return NOT_SUPPORTED;
+        return OPEN_NOT_SUPPORTED;
     }
 
     wth->byte_swapped = byte_swapped;
@@ -72,13 +72,17 @@ open_pcap_code pcap_open(const char *file, wtap *wth) {
     cout<<"  modified: "<<modified<<endl;
     cout<<"  skipbytes: "<<skip_size<<endl;
 #endif
+    return OK;
 }
 
 void pcap_close(wtap *wth) {
-    fclose(wth->fp);
+    if (0 < wth->fp)
+        fclose(wth->fp);
 }
 
 int pcap_read(wtap *wth, char *buf) {
+    if (wth->fp <= 0)
+        return 0;
     pcaprec_hdr *hdr = (pcaprec_hdr *)buf;
     if(sizeof(pcaprec_hdr) != fread(hdr, 1, sizeof(pcaprec_hdr), wth->fp))
         return 0;
