@@ -20,7 +20,7 @@ pcap_code pcap_open(const char *file, wtap *wth) {
     // cout<<"file len: "<<getFileLen(file)<<endl;
 #endif
 
-    wth->fp = fopen(file, "rb");
+    wth->fp = fopen(file, "rb+");
     if (wth->fp <= 0)
         return OPEN_FILE_FAIL;
     fread(hdr, 1, sizeof(pcap_file_hdr), wth->fp);

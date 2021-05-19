@@ -6,7 +6,7 @@ bool decode_IPv4(uint8_t *pkt, LayerNode *pnode) {
     hdr->printInfo();
     hdr->check();
     uint8_t *next = pkt + hdr->getHdrLen();
-    pnode->next = new LayerNode(Layer_IP, IP_IPv4, next, pnode);
+    pnode->next = new LayerNode(Layer_IP, Net_IPv4, next, pnode);
     decode_trans_layer((TRANS_PROTO)hdr->upProto, next, pnode->next);
 }
 

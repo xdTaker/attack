@@ -1,21 +1,6 @@
 ## build
-在libs/base/
 ``` bash
-mkdir build && cd build
-cmake ..
-make
-```
-在libs/pcap/
-``` bash
-mkdir build && cd build
-cmake ..
-make
-```
-在工程目录
-``` bash
-mkdir build && cd build
-cmake ..
-make
+sh make.sh
 ```
 
 ## 目录结构

@@ -26,10 +26,16 @@ link_directories(
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/../
 )
-
+find_library(NET_BASE_STATIC libnet_base.a)
 
 add_library(pcap SHARED
     ${CMAKE_CURRENT_SOURCE_DIR}/pcap.cpp
 )
 
+add_library(pcap_static STATIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcap.cpp
+)
+SET_TARGET_PROPERTIES(pcap_static PROPERTIES OUTPUT_NAME "pcap")
+
 target_link_libraries(pcap net_base)
+target_link_libraries(pcap_static NET_BASE_STATIC)

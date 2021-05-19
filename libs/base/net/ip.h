@@ -2,19 +2,30 @@
 
 #include <base/common.h>
 
-enum IP_Type {
-    IP_IPv4,
-    IP_IPv6,
+enum Net_Type {
+    Net_IPv4,
+    Net_IPv6,
+    Net_ICMP,
+    Net_IGMP
 };
 
-enum IP_Proto {
-    TCP = 0,
+enum ForIP_Proto {
+    ICMP = 1,
+    IGMP = 2,
+    TCP = 6,
+    UDP = 17,
 };
 
 struct IP4hdr{
     uint8_t hdrLen: 4;  // 4字节为单位
     uint8_t version: 4;
-    uint8_t tos;    // type of service
+    /* TOS: type of service */
+    uint8_t unused: 1;
+    uint8_t minCost: 1;
+    uint8_t maxReliable: 1;
+    uint8_t maxThruput: 1;
+    uint8_t minDelay: 1;
+    uint8_t priority: 3; // not used
     uint16_t totalLen;
 
     uint16_t identity;

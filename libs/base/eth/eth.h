@@ -10,7 +10,7 @@ enum Eth_Type {
     ETHSNAP,
 };
 
-enum Eth_Proto {
+enum ForEth_Proto {
     IPv4 = 0x0008,
     IPv6 = 0xDD86,
     ARP = 0x0608,
