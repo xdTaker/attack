@@ -35,8 +35,13 @@ add_library(net_base SHARED
     ${CMAKE_CURRENT_SOURCE_DIR}/common.cpp
 )
 
-# target_include_directories(net_base
-#     PUBLIC
-#         ${CMAKE_CURRENT_SOURCE_DIR}/net
-#         ${CMAKE_CURRENT_SOURCE_DIR}/eth
-# )
+add_library(net_base_static STATIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/eth/eth.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/net/vlan.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/net/net-layer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/net/ip.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/trans/trans-layer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/trans/tcp.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/common.cpp
+)
+SET_TARGET_PROPERTIES(net_base_static PROPERTIES OUTPUT_NAME "net_base")
