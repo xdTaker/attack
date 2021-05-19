@@ -25,7 +25,7 @@ struct IP4hdr{
     uint8_t maxReliable: 1;
     uint8_t maxThruput: 1;
     uint8_t minDelay: 1;
-    uint8_t priority: 4; // not used
+    uint8_t priority: 3; // not used
     uint16_t totalLen;
 
     uint16_t identity;
