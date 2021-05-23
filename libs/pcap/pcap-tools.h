@@ -1,7 +1,7 @@
 #pragma once
 
 #include <pcap/pcap.h>
-#include <base/eth/eth.h>
+#include <base/link/eth.h>
 #include <base/net/net-layer.h>
 
 void edit_pkt(uint8_t *pkt) {

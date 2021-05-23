@@ -1,6 +1,6 @@
 #pragma once
 
-#include <base/eth/eth.h>
+#include <base/link/eth.h>
 #include <base/net/vlan.h>
 #include <base/net/ip.h>
 

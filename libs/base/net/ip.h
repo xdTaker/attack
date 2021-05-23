@@ -1,19 +1,20 @@
 #pragma once
 
 #include <base/common.h>
+#include <base/link/eth.h>
 
 enum Net_Type {
     Net_IPv4,
     Net_IPv6,
     Net_ICMP,
-    Net_IGMP
+    Net_IGMP,
 };
 
 enum ForIP_Proto {
-    ICMP = 1,
-    IGMP = 2,
-    TCP = 6,
-    UDP = 17,
+    ICMP = 0x01,
+    IGMP = 0x02,
+    TCP  = 0x06,
+    UDP  = 0x11,
 };
 
 struct IP4hdr{
@@ -50,10 +51,10 @@ struct IP4hdr{
     static uint32_t IPstr2int(const char *IPstr);
     uint16_t getTotalLen() {return swap_bytes<uint16_t>(totalLen);}
     uint16_t getHdrLen() {return hdrLen * 4;}
+    bool check();
     void setCheck();
     void subTTL();
-    bool check();
-    void setTcpPsdHdr();
+    void setTcpPsdIP4Hdr();
     void printInfo();
 };
 #define IP4_HDR_LEN 20

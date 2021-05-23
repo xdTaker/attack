@@ -11,9 +11,10 @@ enum Eth_Type {
 };
 
 enum ForEth_Proto {
+    FORETH_UNKNOW = 0,
     IPv4 = 0x0008,
     IPv6 = 0xDD86,
-    ARP = 0x0608,
+    ARP  = 0x0608,
     RARP = 0x3580,
     VLAN = 0x0081,
 };
