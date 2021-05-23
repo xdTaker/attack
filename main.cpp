@@ -1,5 +1,5 @@
 #include <iostream>
-#include "libs/base/eth/eth.h"
+#include "libs/base/link/eth.h"
 #include "libs/pcap/pcap.h"
 #include <base/net/ip.h>
 // #include <base/common.h>
@@ -37,9 +37,11 @@ int parse_pcap(const char* pcap_file) {
     while((len = pcap_read(&wth, (char*)buf)) > 0) {
         pcaprec_hdr *hdr = (pcaprec_hdr *)buf;
         hdr->printInfo();
+        uint8_t *pkt = buf + sizeof(pcaprec_hdr);
+        // print_hex(buf, len);
         // printf("ftell: %ld\n", ftell(wth.fp));
-        LayerNode *node = new LayerNode(buf + sizeof(pcaprec_hdr));
-        decode_ether(buf + sizeof(pcaprec_hdr), node);
+        LayerNode *node = new LayerNode(pkt);
+        decode_ether(pkt, node);
         LayerNode *tnode;
         while (node) {
             tnode = node;
@@ -56,6 +58,7 @@ int main(int argc, char**argv) {
         printf("%s <pkt_file>\n", argv[0]);
         return 0;
     }
+    // int a;scanf("%d", &a);
     const char* pcap_file = argv[1];
     parse_pcap(pcap_file);
     return 0;

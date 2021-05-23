@@ -1,6 +1,6 @@
 #include <base/net/vlan.h>
 #include <base/net/net-layer.h>
-#include <base/eth/eth.h>
+#include <base/link/eth.h>
 
 bool decode_vlan(uint8_t *pkt, LayerNode *pnode) {
     cout<<"vlan"<<endl;

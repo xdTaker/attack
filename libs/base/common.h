@@ -11,7 +11,16 @@ using std::string;
 
 #include <base/proto.h>
 
+enum HexFormat {
+    HEX_COMMON = 0,
+    HEX_ASCII = 8,
+};
+
 void split_string(const char *src, vector<string> &dest, const char *separator, bool null_part=true);
+int64_t getFileLen(const char *file);
+uint16_t getCheckSum(const uint16_t *data, size_t len, const uint16_t base=0);
+string getstr_hex(const uint8_t *buf, size_t size, HexFormat hex_type=HEX_ASCII);
+void print_hex(const uint8_t *buf, size_t size, HexFormat hex_type=HEX_ASCII);
 
 template<typename T>
 T swap_bytes(const T data) {
@@ -51,9 +60,6 @@ void print_hex(const T data) {
     printf("%s\n", getstr_hex(data).c_str());
 }
 
-string getstr_hex(const uint8_t *buf, int size);
-void print_hex(const uint8_t *buf, int size);
-
 template<typename T>
 string getstr_bin(const T data) {
     char res[65];
@@ -73,6 +79,3 @@ void print_bin(const T data) {
     printf("%s\n", getstr_bin(data).c_str());
 }
 
-int64_t getFileLen(const char *file);
-
-void test_print();
