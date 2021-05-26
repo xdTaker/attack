@@ -27,17 +27,18 @@ include_directories(
 
 add_library(net_base SHARED
     ${CMAKE_CURRENT_SOURCE_DIR}/link/eth.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/net/vlan.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/link/vlan.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/net/net-layer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/net/ip.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/trans/trans-layer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/trans/tcp.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/common.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/proto.cpp
 )
 
 add_library(net_base_static STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/link/eth.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/net/vlan.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/link/vlan.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/net/net-layer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/net/ip.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/trans/trans-layer.cpp

@@ -11,7 +11,7 @@ if(NOT CMAKE_CXX_FLAGS)
   message("Setting build type to '"${CMAKE_CXX_FLAGS}"' as none was specified.")
 endif()
 
-project(main)
+project(example)
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/libs
@@ -22,8 +22,8 @@ link_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/libs/pcap/build
 )
 
-add_executable(main main.cpp)
+add_executable(example test.cpp)
 
-target_link_libraries(main
+target_link_libraries(example
   PUBLIC
     pcap net_base)

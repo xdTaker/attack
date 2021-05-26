@@ -29,8 +29,8 @@ enum Port_for_Proto {
 
 enum Layer {
     Layer_TOP,
-    Layer_ETH,
-    Layer_IP,
+    Layer_LINK,
+    Layer_NET,
     Layer_TRANS,
     Layer_APP,
 };
@@ -50,4 +50,5 @@ struct LayerNode {
     }
     ~LayerNode() {
     }
+    void printInfo();
 };

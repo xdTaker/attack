@@ -13,4 +13,4 @@ sh make.sh
 |　　|--pkgs 数据包  
 |--reference 参考资料  
 |--temp 鸡肋文件  
-|--main.cpp 入口  
+|--test.cpp 测试入口  

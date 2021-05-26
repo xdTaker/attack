@@ -3,9 +3,9 @@
 
 bool decode_IPv4(uint8_t *pkt, LayerNode *pnode) {
     IP4hdr *hdr = (IP4hdr*)pkt;
-    hdr->printInfo();
+    // hdr->printInfo();
     uint8_t *next = pkt + hdr->getHdrLen();
-    pnode->next = new LayerNode(Layer_IP, Net_IPv4, pkt, pnode);
+    pnode->next = new LayerNode(Layer_NET, IPv4, pkt, pnode);
     decode_trans_layer((TRANS_PROTO)hdr->upProto, next, pnode->next);
 }
 
@@ -36,9 +36,9 @@ uint32_t IP4hdr::IPstr2int(const char *IPstr) {
     split_string(IPstr, parts, ".");
     if (parts.size() != 4)
         goto end;
-    for (string &str: parts) {
+    for (auto it=parts.rbegin(); it!=parts.rend(); it++) {
         IPaddr <<= 8;
-        tmp = atoi(str.c_str());
+        tmp = atoi(it->c_str());
         if (tmp < 0 && tmp > 255) {
             IPaddr = 0;
             goto end;
@@ -49,18 +49,30 @@ end:
     return IPaddr;
 }
 
-void IP4hdr::setCheck(){
+void IP4hdr::setCheck() {
     checksum = 0;
     checksum = getCheckSum((uint16_t*)this, getHdrLen());
 }
 
-bool IP4hdr::check(){
+void IP4hdr::setUpCheck() {
+    TCPhdr *tcp_hdr;
+    switch (getProto()) {
+        case TCP:
+            tcp_hdr = (TCPhdr*)((uint8_t*)this + getHdrLen());
+            tcp_hdr->setCheck(this);
+            break;
+        default:
+            break;
+    }
+}
+
+bool IP4hdr::check() {
     uint16_t t_checksum = getCheckSum((uint16_t*)this, getHdrLen());
     // printf("  checksum: %u\n", t_checksum);
     return t_checksum == 0;
 }
 
-void IP4hdr::subTTL(){
+void IP4hdr::subTTL() {
     TTL --;
     checksum ++;
 }
@@ -82,8 +94,10 @@ void IP4hdr::setProto(TRANS_PROTO proto) {
 void IP4hdr::setSrcAddr(uint32_t addr) {
     srcAddr = addr;
     setCheck();
+    setUpCheck();
 }
 void IP4hdr::setDstAddr(uint32_t addr) {
     dstAddr = addr;
     setCheck();
+    setUpCheck();
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <base/common.h>
 #include <base/net/ip.h>
+#include <base/trans/tcp.h>
 
 void decode_trans_layer(TRANS_PROTO proto, uint8_t *pkt, LayerNode *pnode);
 ForEth_Proto set_psd_hdr(const void *ip_hdr, void *phdr);

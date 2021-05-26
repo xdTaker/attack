@@ -80,7 +80,7 @@ void pcap_close(wtap *wth) {
         fclose(wth->fp);
 }
 
-int pcap_read(wtap *wth, char *buf) {
+int pcap_read(wtap *wth, uint8_t *buf) {
     if (wth->fp <= 0)
         return 0;
     pcaprec_hdr *hdr = (pcaprec_hdr *)buf;
