@@ -45,6 +45,7 @@ struct IP4hdr{
     
     IP4hdr(uint8_t len=5);
     void setProto(TRANS_PROTO proto);
+    TRANS_PROTO getProto() {return TRANS_PROTO(upProto);}
     void setSrcAddr(uint32_t addr);
     void setDstAddr(uint32_t addr);
     static string IPint2str(uint32_t IPaddr); 
@@ -53,6 +54,7 @@ struct IP4hdr{
     uint16_t getHdrLen() {return hdrLen * 4;}
     bool check();
     void setCheck();
+    void setUpCheck();
     void subTTL();
     void setTcpPsdIP4Hdr();
     void printInfo();

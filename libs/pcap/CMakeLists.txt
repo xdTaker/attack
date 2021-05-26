@@ -21,6 +21,7 @@ project(pcap)
 
 link_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/../base/build
+    ${CMAKE_CURRENT_SOURCE_DIR}/build
 )
 
 include_directories(
@@ -39,3 +40,11 @@ SET_TARGET_PROPERTIES(pcap_static PROPERTIES OUTPUT_NAME "pcap")
 
 target_link_libraries(pcap net_base)
 target_link_libraries(pcap_static NET_BASE_STATIC)
+
+project(pcaptool)
+
+add_executable(pcaptool pcap-tools.cpp)
+
+target_link_libraries(pcaptool
+  PUBLIC
+    pcap net_base)

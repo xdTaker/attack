@@ -3,9 +3,9 @@
 
 void decode_tcp(uint8_t *pkt, LayerNode *pnode) {
     TCPhdr *hdr = (TCPhdr*)pkt;
+    // hdr->printInfo(pnode->pkt);
     uint8_t *next = pkt + hdr->getHdrLen();
-    pnode->next = new LayerNode(Layer_TRANS, TRANS_TCP, pkt, pnode);
-    hdr->printInfo(pnode->pkt);
+    pnode->next = new LayerNode(Layer_TRANS, TCP, pkt, pnode);
 }
 
 TCPhdr::TCPhdr(uint16_t len){
@@ -60,17 +60,17 @@ void TCPhdr::printInfo(const void *ip_hdr) {
     printf("  ack num: %u\n", ackNum);
     printf("  window: %u\n", window);
     printf("  flags: "); {
-        if (URG)
+        if (flags.URG)
             printf("U ");
-        if (PSH)
+        if (flags.PSH)
             printf("P ");
-        if (RST)
+        if (flags.RST)
             printf("R ");
-        if (SYN)
+        if (flags.SYN)
             printf("S ");
-        if (FIN)
+        if (flags.FIN)
             printf("F ");
-        if (ACK)
+        if (flags.ACK)
             printf("A ");
     }printf("\n");
     printf("  check: %s\n", check(ip_hdr)? "OK": "ERROR");

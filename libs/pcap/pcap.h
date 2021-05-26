@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#define PCAP_DEBUG  1
+#define PCAP_DEBUG  0
 #define PCAP_PKT_MSG 0
 
 #define PCAP_MAGIC                  0xa1b2c3d4
@@ -79,5 +79,5 @@ enum pcap_code {
 };
 
 pcap_code pcap_open(const char *file, wtap *wth);
-int pcap_read(wtap *wth, char *buf);
+int pcap_read(wtap *wth, uint8_t *buf);
 void pcap_close(wtap *wth);
