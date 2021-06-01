@@ -1,5 +1,8 @@
 #include "trans-layer.h"
 #include "tcp.h"
+#include "udp.h"
+
+#include <stdio.h>
 
 void decode_trans_layer(TRANS_PROTO proto, uint8_t *pkt, LayerNode *pnode) {
     switch (proto)
@@ -7,7 +10,11 @@ void decode_trans_layer(TRANS_PROTO proto, uint8_t *pkt, LayerNode *pnode) {
     case TRANS_TCP:
         decode_tcp(pkt, pnode);
         break;
-    
+
+    case TRANS_UDP:
+        decode_udp(pkt, pnode);
+        break;
+
     default:
         cout<<"协议: "<<getstr_hex(proto)<<endl;
         break;

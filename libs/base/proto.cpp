@@ -34,6 +34,9 @@ void LayerNode::printInfo() {
         switch (proto) {
         case TCP:
             ((TCPhdr*)pkt)->printInfo(prev->pkt);
+            break;
+        case UDP:
+            ((UDPhdr*)pkt)->printInfo();
         }
         break;
     default:
