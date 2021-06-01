@@ -1,50 +1,56 @@
 cmake_minimum_required(VERSION 3.5)
 
-SET(CMAKE_CXX_COMPILER "/usr/bin/g++")
+project(base)
 
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  #在命令行中输出message里的信息
-  message("Setting build type to 'Debug' as none was specified.")
-  #不管CACHE里有没有设置过CMAKE_BUILD_TYPE这个变量，都强制赋值这个值为RelWithDebInfo
-  set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
+# SET(CMAKE_CXX_COMPILER "/usr/bin/g++")
 
-  # 当使用cmake-gui的时候，设置构建级别的四个可选项
-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release"
-    "MinSizeRel" "RelWithDebInfo")
+if(NOT CMAKE_INSTALL_PREFIX)
+  set(CMAKE_INSTALL_PREFIX "/usr/local")
 endif()
+set(CMAKE_CXX_FLAGS
+    -std=c++11
+)
 
-if(NOT CMAKE_CXX_FLAGS)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11" CACHE STRING "Choose the type of build." FORCE)
-  message("Setting build type to '"${CMAKE_CXX_FLAGS}"' as none was specified.")
-endif()
+set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+set(CMAKE_INSTALL_INCLUDEDIR ${CMAKE_INSTALL_PREFIX}/include)
+set(BASE_VERSION 1.0)
+set(BASE_SOVERSION 1)
 
 
-project(net_base)
-
+# 资源
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/..
 )
-
-add_library(net_base SHARED
-    ${CMAKE_CURRENT_SOURCE_DIR}/link/eth.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/link/vlan.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/net/net-layer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/net/ip.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/trans/trans-layer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/trans/tcp.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/trans/udp.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/common.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/proto.cpp
+set(SRC_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}/encode.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/file-kit.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/str-kit.cpp
 )
 
-add_library(net_base_static STATIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/link/eth.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/link/vlan.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/net/net-layer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/net/ip.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/trans/trans-layer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/trans/tcp.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/trans/udp.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/common.cpp
+# 动态库
+add_library(base SHARED ${SRC_LIST})
+set_target_properties(base
+    PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY ${ROOT_DIR}/target
+        VERSION ${BASE_VERSION}
+        SOVERSION ${BASE_SOVERSION}
 )
-SET_TARGET_PROPERTIES(net_base_static PROPERTIES OUTPUT_NAME "net_base")
+
+# 静态库
+add_library(base_static STATIC ${SRC_LIST})
+set_target_properties(base_static
+    PROPERTIES
+        OUTPUT_NAME "base"
+        ARCHIVE_OUTPUT_DIRECTORY ${ROOT_DIR}/target
+)
+
+# install
+install(TARGETS base base_static
+    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/include
+    PATTERN "*.cpp" EXCLUDE
+    PATTERN "*.txt" EXCLUDE
+)
