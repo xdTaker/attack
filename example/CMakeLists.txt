@@ -19,7 +19,6 @@ include_directories(
 link_directories(
     /usr/local/lib
 )
-# find_library(LIB_S NAMES libproto.a libcap.a libbase.a /usr/local/lib)
 
 add_executable(example ${CMAKE_CURRENT_SOURCE_DIR}/test.cpp)
 
@@ -32,14 +31,3 @@ target_link_libraries(example
 PUBLIC
     cap proto base
 )
-
-# # 根据参数使用动态库或静态库
-# if(${BIN_STATIC})
-#     message("静态")
-#     target_link_libraries(example ${LIB_S})
-# else()
-#     message("动态")
-#     target_link_libraries(example
-#         PUBLIC
-#             cap proto base)
-# endif()

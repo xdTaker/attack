@@ -1,6 +1,19 @@
 ## build
+全编译安装
 ``` bash
-sh make.sh
+sh test-make.sh
+```
+编译安装cap模块
+``` bash
+sh cap-make.sh
+```
+编译安装proto模块
+``` bash
+sh proto-make.sh
+```
+编译安装base模块
+``` bash
+sh base-make.sh
 ```
 
 ## 目录结构
