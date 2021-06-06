@@ -6,7 +6,7 @@ bool decode_IPv4(uint8_t *pkt, LayerNode *pnode) {
     // hdr->printInfo();
     uint8_t *next = pkt + hdr->getHdrLen();
     pnode->next = new LayerNode(Layer_NET, IPv4, pkt, pnode);
-    decode_trans_layer((TRANS_PROTO)hdr->upProto, next, pnode->next);
+    return decode_trans_layer((TRANS_PROTO)hdr->upProto, next, pnode->next);
 }
 
 IP4hdr::IP4hdr(uint8_t len){
@@ -18,8 +18,6 @@ IP4hdr::IP4hdr(uint8_t len){
 
 string IP4hdr::IPint2str(uint32_t IPaddr) {
     string IPstr;
-    int swaped_IP = swap_bytes<uint32_t>(IPaddr);
-    // print_hex<uint32_t>(IPaddr);
     for (int i=0; i<4; i++) {
         IPstr += std::to_string(IPaddr & 0xFF);
         IPstr += '.';

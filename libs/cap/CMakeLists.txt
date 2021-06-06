@@ -5,6 +5,7 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 add_compile_options(-W -Wall)
+add_compile_options(-Wno-implicit-fallthrough)
 if(CMAKE_COMPILER_IS_GNUCXX)    # gcc编译器
     add_compile_options(-std=c++11)
 endif()

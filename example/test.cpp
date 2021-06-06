@@ -35,9 +35,8 @@ int parse_pcap(int argc, char**argv) {
         printf("open %s fail, code: %d\n", pcap_file, code);
         return code;
     }
-    int cnt = 10;
     uint8_t buf[MAX_PCAP_SIZE];
-    int64_t sum_len = sizeof(pcap_file_hdr) + wth.skip_size;
+    // int64_t sum_len = sizeof(pcap_file_hdr) + wth.skip_size;
     int len;
     while((len = pcap_read(&wth, buf)) > 0) {
         pcaprec_hdr *hdr = (pcaprec_hdr *)buf;

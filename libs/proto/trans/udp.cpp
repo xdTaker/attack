@@ -10,8 +10,9 @@ void UDPhdr::printInfo(){
 }
 
 
-void decode_udp(uint8_t *pkt, LayerNode *pnode){
+bool decode_udp(uint8_t *pkt, LayerNode *pnode){
     //UDPhdr *hdr = (UDPhdr*)pkt;
     //uint8_t *next = pkt + UDP_HDR_LEN;
     pnode->next = new LayerNode(Layer_TRANS, UDP, pkt, pnode);
+    return true;
 }

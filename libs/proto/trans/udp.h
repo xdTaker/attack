@@ -16,7 +16,7 @@ struct UDPhdr{
     void printInfo();
 };
 
-void decode_udp(uint8_t *pkt, LayerNode *pnode);
+bool decode_udp(uint8_t *pkt, LayerNode *pnode);
 
 
 

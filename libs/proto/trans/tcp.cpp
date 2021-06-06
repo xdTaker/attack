@@ -1,11 +1,11 @@
 #include "tcp.h"
 #include "trans-layer.h"
 
-void decode_tcp(uint8_t *pkt, LayerNode *pnode) {
-    TCPhdr *hdr = (TCPhdr*)pkt;
-    // hdr->printInfo(pnode->pkt);
-    uint8_t *next = pkt + hdr->getHdrLen();
+bool decode_tcp(uint8_t *pkt, LayerNode *pnode) {
+    // TCPhdr *hdr = (TCPhdr*)pkt;
+    // uint8_t *next = pkt + hdr->getHdrLen();
     pnode->next = new LayerNode(Layer_TRANS, TCP, pkt, pnode);
+    return true;
 }
 
 TCPhdr::TCPhdr(uint16_t len){

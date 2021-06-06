@@ -57,7 +57,7 @@ void edit_pkt(uint8_t *pkt) {
     vector<string>::iterator opt;
 
     TCPhdr *tcp_hdr;
-    IP4hdr *ip4_hdr;
+    // IP4hdr *ip4_hdr;
     bool showInfo = true;
     printf("type \"help\" to get help\n");
     while (1) {

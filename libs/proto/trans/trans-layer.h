@@ -4,7 +4,7 @@
 #include <proto/trans/tcp.h>
 #include <proto/trans/udp.h>
 
-void decode_trans_layer(TRANS_PROTO proto, uint8_t *pkt, LayerNode *pnode);
+bool decode_trans_layer(TRANS_PROTO proto, uint8_t *pkt, LayerNode *pnode);
 ForEth_Proto set_psd_hdr(const void *ip_hdr, void *phdr);
 
 /* 伪IP头 */

@@ -67,6 +67,7 @@ struct wtap {
     char            buf[MAX_PCAP_SIZE];
     FILE            *fp;
     bool            byte_swapped;
+    bool            modified;
     int             skip_size;
 };
 
