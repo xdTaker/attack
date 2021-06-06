@@ -63,5 +63,5 @@ struct EthSNAP_hdr {
 };
 #pragma pack(pop)
 
-void decode_ether(uint8_t* pkt, LayerNode *pnode);
+bool decode_ether(uint8_t* pkt, LayerNode *pnode);
 int encode_ether(uint8_t *pkt, eth_proto proto, uint8_t *srcMac, uint8_t *dstMac);

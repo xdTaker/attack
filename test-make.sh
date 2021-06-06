@@ -7,4 +7,4 @@ target_dir=${project_dir}/target
 
 sh cap-make.sh &&
 mkdir -p ${build_dir} && cd ${build_dir} &&
-cmake ${src_dir} -DBIN_STATIC=1 && make -j
+cmake ${src_dir} && make -j

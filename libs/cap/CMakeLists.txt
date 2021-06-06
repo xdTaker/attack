@@ -4,9 +4,11 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
 endif()
 
-set(CMAKE_CXX_FLAGS
-    -std=c++11
-)
+add_compile_options(-W -Wall)
+add_compile_options(-Wno-implicit-fallthrough)
+if(CMAKE_COMPILER_IS_GNUCXX)    # gcc编译器
+    add_compile_options(-std=c++11)
+endif()
 
 if(NOT CMAKE_INSTALL_PREFIX)
   set(CMAKE_INSTALL_PREFIX "/usr/local")
@@ -55,11 +57,20 @@ set_target_properties(cap_static
 project(captool)
 
 add_executable(captool ${CMAKE_CURRENT_SOURCE_DIR}/cap-tools.cpp)
-
-target_link_libraries(captool
-  PUBLIC
-    cap proto base
-)
+# 根据参数使用动态库或静态库
+if(${BIN_STATIC})
+    find_library(PROTO_STATIC libproto.a)
+    find_library(CAP_STATIC libcap.a)
+    find_library(BASE_STATIC libbase.a)
+    target_link_libraries(captool
+        PUBLIC
+        ${PROTO_STATIC} ${CAP_STATIC} ${BASE_STATIC}
+    )
+else()
+    target_link_libraries(captool
+        PUBLIC
+            cap proto base)
+endif()
 set_target_properties(captool
     PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${ROOT_DIR}/target

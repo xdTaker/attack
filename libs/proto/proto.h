@@ -43,13 +43,13 @@ struct LayerNode {
     uint16_t proto;
     void *pkt;
     void *ext;
-    LayerNode *next;
     LayerNode *prev;
+    LayerNode *next;
     LayerNode(Layer layer, uint16_t proto, void *pkt, LayerNode *prev=nullptr, void *ext=nullptr)
-        : layer(layer), proto(proto), pkt(pkt), prev(prev), next(nullptr), ext(ext) {
+        : layer(layer), proto(proto), pkt(pkt), ext(ext), prev(prev), next(nullptr) {
     }
     LayerNode(void *pkt)
-        : layer(Layer_TOP), pkt(pkt), prev(nullptr), next(nullptr), ext(nullptr) {
+        : layer(Layer_TOP), pkt(pkt), ext(nullptr), prev(nullptr), next(nullptr) {
     }
     ~LayerNode() {
     }

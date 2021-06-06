@@ -10,9 +10,10 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     "MinSizeRel" "RelWithDebInfo")
 endif()
 
-set(CMAKE_CXX_FLAGS
-    -std=c++11
-)
+add_compile_options(-W -Wall)
+if(CMAKE_COMPILER_IS_GNUCXX)    # gcc编译器
+    add_compile_options(-std=c++11)
+endif()
 
 if(NOT CMAKE_INSTALL_PREFIX)
   set(CMAKE_INSTALL_PREFIX "/usr/local")

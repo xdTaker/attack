@@ -20,7 +20,7 @@ pcap_code pcap_open(const char *file, wtap *wth) {
 #endif
 
     wth->fp = fopen(file, "rb+");
-    if (wth->fp <= 0)
+    if (!wth->fp)
         return OPEN_FILE_FAIL;
     fread(hdr, 1, sizeof(pcap_file_hdr), wth->fp);
     switch (hdr->magic) {
@@ -63,6 +63,7 @@ pcap_code pcap_open(const char *file, wtap *wth) {
 
     wth->byte_swapped = byte_swapped;
     wth->skip_size = skip_size;
+    wth->modified = modified;
 
 #if PCAP_DEBUG
     cout<<"pcap info:"<<endl;
@@ -75,12 +76,12 @@ pcap_code pcap_open(const char *file, wtap *wth) {
 }
 
 void pcap_close(wtap *wth) {
-    if (0 < wth->fp)
+    if (wth->fp)
         fclose(wth->fp);
 }
 
 int pcap_read(wtap *wth, uint8_t *buf) {
-    if (wth->fp <= 0)
+    if (!wth->fp)
         return 0;
     pcaprec_hdr *hdr = (pcaprec_hdr *)buf;
     if(sizeof(pcaprec_hdr) != fread(hdr, 1, sizeof(pcaprec_hdr), wth->fp))
@@ -94,7 +95,7 @@ int pcap_read(wtap *wth, uint8_t *buf) {
 #endif
     // cout<<"caplen: "<<hdr->incl_len<<endl;
 #endif
-    int readlen = fread(hdr+1, 1, hdr->incl_len, wth->fp);
+    uint32_t readlen = fread(hdr+1, 1, hdr->incl_len, wth->fp);
     if (hdr->incl_len != readlen) {
         cout<<"error! caplen: "<<hdr->incl_len<<"  readlen: "<<readlen<<endl;
     }

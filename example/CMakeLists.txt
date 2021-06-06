@@ -4,9 +4,10 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
 endif()
 
-set(CMAKE_CXX_FLAGS
-    -std=c++11
-)
+add_compile_options(-W -Wall)
+if(CMAKE_COMPILER_IS_GNUCXX)    # gcc编译器
+    add_compile_options(-std=c++11)
+endif()
 
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
@@ -19,7 +20,6 @@ include_directories(
 link_directories(
     /usr/local/lib
 )
-# find_library(LIB_S NAMES libproto.a libcap.a libbase.a /usr/local/lib)
 
 add_executable(example ${CMAKE_CURRENT_SOURCE_DIR}/test.cpp)
 
@@ -32,14 +32,3 @@ target_link_libraries(example
 PUBLIC
     cap proto base
 )
-
-# # 根据参数使用动态库或静态库
-# if(${BIN_STATIC})
-#     message("静态")
-#     target_link_libraries(example ${LIB_S})
-# else()
-#     message("动态")
-#     target_link_libraries(example
-#         PUBLIC
-#             cap proto base)
-# endif()

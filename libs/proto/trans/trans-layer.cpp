@@ -1,20 +1,24 @@
 #include "trans-layer.h"
 
-void decode_trans_layer(TRANS_PROTO proto, uint8_t *pkt, LayerNode *pnode) {
+bool decode_trans_layer(TRANS_PROTO proto, uint8_t *pkt, LayerNode *pnode) {
+    bool ret;
     switch (proto)
     {
     case TRANS_TCP:
-        decode_tcp(pkt, pnode);
+        ret = decode_tcp(pkt, pnode);
         break;
 
     case TRANS_UDP:
-        decode_udp(pkt, pnode);
+        ret = decode_udp(pkt, pnode);
         break;
     
     default:
+        ret = false;
         cout<<"协议: "<<getstr_hex(proto)<<endl;
         break;
     }
+
+    return ret;
 }
 
 

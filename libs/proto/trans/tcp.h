@@ -35,5 +35,5 @@ struct TCPhdr {
 };
 #define TCP_HDR_LEN 20
 
-void decode_tcp(uint8_t *pkt, LayerNode *pnode);
+bool decode_tcp(uint8_t *pkt, LayerNode *pnode);
 uint32_t encode_tcp(uint8_t *pkt);

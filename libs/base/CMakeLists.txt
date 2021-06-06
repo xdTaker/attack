@@ -4,18 +4,19 @@ project(base)
 
 # SET(CMAKE_CXX_COMPILER "/usr/bin/g++")
 
-if(NOT CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/usr/local")
+add_compile_options(-W -Wall)
+if(CMAKE_COMPILER_IS_GNUCXX)    # gcc编译器
+    add_compile_options(-std=c++11)
 endif()
-set(CMAKE_CXX_FLAGS
-    -std=c++11
-)
 
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../..)
-set(CMAKE_INSTALL_INCLUDEDIR ${CMAKE_INSTALL_PREFIX}/include)
 set(BASE_VERSION 1.0)
 set(BASE_SOVERSION 1)
 
+if(NOT CMAKE_INSTALL_PREFIX)
+  set(CMAKE_INSTALL_PREFIX "/usr/local")
+endif()
+set(CMAKE_INSTALL_INCLUDEDIR ${CMAKE_INSTALL_PREFIX}/include)
 
 # 资源
 include_directories(
