@@ -15,6 +15,10 @@ sh proto-make.sh
 ``` bash
 sh base-make.sh
 ```
+安装工具
+``` bash
+sh tool/tool-make.sh # 工具将安装在系统目录
+```
 
 ## 目录结构
 |--libs 库  
@@ -23,6 +27,7 @@ sh base-make.sh
 |　　|--pcap 数据包文件处理模块  
 |　　|--attack 网络攻击模块  
 |　　|--3rd-party 第三方库  
+|--tool 工具集  
 |--example 测试及调用样例  
 |--data 数据  
 |　　|--pkgs 数据包  
